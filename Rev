@@ -1,0 +1,26 @@
+func RevConcatAlternate(slice1, slice2 []int) []int {
+    // Determine the longer and shorter slices
+    longSlice, shortSlice := slice1, slice2
+    if len(slice2) > len(slice1) {
+        longSlice, shortSlice = slice2, slice1
+    }
+
+    // Reverse the elements of the longer slice in place
+    for i, j := 0, len(longSlice)-1; i < j; i, j = i+1, j-1 {
+        longSlice[i], longSlice[j] = longSlice[j], longSlice[i]
+    }
+
+    result := []int{}
+
+    // Alternate appending from the reversed long slice and the short slice
+    for i := 0; i < len(longSlice); i++ {
+        result = append(result, longSlice[i])
+
+        // Only append from the short slice if the index is within its bounds
+        if i < len(shortSlice) {
+            result = append(result, shortSlice[i])
+        }
+    }
+
+    return result
+}
